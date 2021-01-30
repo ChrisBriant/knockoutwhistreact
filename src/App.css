@@ -128,3 +128,29 @@ button:disabled:  button,
     text-align: left;
     margin-bottom: 1rem;
   } */
+
+.flex-container {
+  display: flex;
+  flex-flow: nowrap;
+}
+
+.flex-container > div {
+  padding: 10px;
+}
+
+.cardfront {
+  width: 3rem;
+  height: 6rem;
+  border: 5px solid rgba(0,0,0,0);
+  text-align: center;
+  margin:2px;
+}
+
+.cardfront > img {
+  width: 3rem;
+  height: 6rem;
+}
+
+.cardfront:hover {
+  border-color: green;
+}

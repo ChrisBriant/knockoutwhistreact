@@ -21,7 +21,9 @@ const TestConnect = () => {
                           inRoom: false,
                           roomName: '',
                           roomMessages: [],
-                          otherMembers: []
+                          otherMembers: [],
+                          hand:[],
+                          startPlayer:false
   };
 
 
@@ -109,7 +111,15 @@ const TestConnect = () => {
                   inRoom : false,
                   roomName :'',
                   roomMessages:[],
-                  otherMembers:[]
+                  otherMembers:[],
+                  hand:[]
+        };
+      case 'hand':
+        //Set the hand
+        console.log(action.payload);
+        return {  ...state,
+                  hand : action.payload.hand,
+                  startPlayer: action.payload.startplayer
         };
       default:
         return state;
@@ -154,6 +164,9 @@ const TestConnect = () => {
                 break;
               case 'room_exit':
                 dispatch({type:'exitRoom', payload:data});
+                break;
+              case 'hand':
+                dispatch({type:'hand', payload:data});
                 break;
               case 'destroy_room':
                 dispatch({type:'destroyRoom', payload:data});
@@ -202,6 +215,8 @@ const TestConnect = () => {
                     roomName={state.roomName}
                     roomMessages={state.roomMessages}
                     otherMembers={state.otherMembers}
+                    hand={state.hand}
+                    startPlayer={state.startPlayer}
                     /> :
               <Rooms userId={state.myId} rooms={state.rooms}/>
           }
