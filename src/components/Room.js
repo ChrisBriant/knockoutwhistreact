@@ -1,6 +1,7 @@
 import {useState} from 'react';
 //import { animateScroll } from "react-scroll";
 import Hand from './Hand';
+import Table from './Table';
 import sock from '../services/socket';
 
 
@@ -107,6 +108,10 @@ const Room = (props) => {
                   </div>
                 :
                   <>
+                    <Table
+                      trump={props.trump}
+                      trick={props.trick}
+                    />
                     {
                       props.userId === props.startPlayer ?
                       <p>You go first, play a card!</p> :

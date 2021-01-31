@@ -17,13 +17,26 @@ const getCardPicture = (card) => {
 };
 
 const Hand = (props) => {
+
+  const playCard = async (e) => {
+    console.log('here is the id', e.target.id);
+    let payload = {
+      'type' : 'play_card',
+      'card' : e.target.id,
+      'client_id' : props.userId,
+      'room_id' : props.roomId
+    }
+    await sock.send(JSON.stringify(payload));
+  }
+
   return (
     <>
       <div className="flex-container">
         {
           props.hand.map((card,i) => (
-            <div key={i}>{card}
+            <div id={card} key={i} onClick={playCard}>
               <CardImage
+                id={card}
                 card={card}
                 userId={props.userId}
                 roomId={props.roomId}

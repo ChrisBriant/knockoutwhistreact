@@ -162,18 +162,18 @@ const CardImage = (props) => {
     }
   }
 
-  const playCard = async (e) => {
-    let payload = {
-      'type' : 'play_card',
-      'card' : props.card,
-      'client_id' : props.userId,
-      'room_id' : props.roomId
-    }
-    await sock.send(JSON.stringify(payload));
-  }
+  // const playCard = async (e) => {
+  //   let payload = {
+  //     'type' : 'play_card',
+  //     'card' : props.card,
+  //     'client_id' : props.userId,
+  //     'room_id' : props.roomId
+  //   }
+  //   await sock.send(JSON.stringify(payload));
+  // }
 
   return (
-    <div className="cardfront" onClick={playCard}>
+    <div className="cardfront">
       <img id={props.id} src={getCard()} alt={props.card}/>
     </div>
   );

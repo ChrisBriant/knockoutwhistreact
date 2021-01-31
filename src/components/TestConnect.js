@@ -23,7 +23,9 @@ const TestConnect = () => {
                           roomMessages: [],
                           otherMembers: [],
                           hand:[],
-                          startPlayer:false
+                          startPlayer:false,
+                          trump: null,
+                          trick: []
   };
 
 
@@ -119,7 +121,9 @@ const TestConnect = () => {
         console.log(action.payload);
         return {  ...state,
                   hand : action.payload.hand,
-                  startPlayer: action.payload.startplayer
+                  startPlayer: action.payload.startplayer,
+                  trump: action.payload.trump,
+                  trick: action.payload.trick
         };
       default:
         return state;
@@ -217,6 +221,8 @@ const TestConnect = () => {
                     otherMembers={state.otherMembers}
                     hand={state.hand}
                     startPlayer={state.startPlayer}
+                    trump ={state.trump}
+                    trick={state.trick}
                     /> :
               <Rooms userId={state.myId} rooms={state.rooms}/>
           }
