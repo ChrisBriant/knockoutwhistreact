@@ -2,12 +2,14 @@ import {useState} from 'react';
 //import { animateScroll } from "react-scroll";
 import Hand from './Hand';
 import Table from './Table';
+import Tricks from './Tricks';
 import sock from '../services/socket';
+import PlayerBox from './PlayerBox';
 
 
 
 const Room = (props) => {
-  console.log(props);
+  console.log('ROOM PROPS',props);
 
   const [message,setMessage] = useState('');
   const [pm,setPm] = useState(null);
@@ -92,22 +94,32 @@ const Room = (props) => {
         { props.otherMembers.length > 0
           ?
             <>
-              <div>
-                <p>Players:</p>
-                {
-                  props.otherMembers.map((member,i) => (
-                    <p key={i}>{member.id === props.startPlayer ? '>' : null} {member.name}</p>
-                  ))
-                }
-              </div>
+
               {
                 props.hand.length === 0
                 ?
-                  <div>
-                    <button onClick={startGame}>Start Game</button>
-                  </div>
+                  <>
+                    <PlayerBox
+                      otherMembers={props.otherMembers}
+                      startPlayer={props.startPlayer}
+                    />
+                    <div>
+                      <button onClick={startGame}>Start Game</button>
+                    </div>
+                  </>
                 :
                   <>
+                    <div className="flex-container">
+                      <PlayerBox
+                        otherMembers={props.otherMembers}
+                        startPlayer={props.startPlayer}
+                      />
+                      <Tricks
+                        userId = {props.userId}
+                        completedTricks={props.completedTricks}
+                        roundNumber={props.roundNumber}
+                      />
+                    </div>
                     <Table
                       trump={props.trump}
                       trick={props.trick}
@@ -126,9 +138,11 @@ const Room = (props) => {
               }
             </>
           :
-            <div>
-              <p>Waiting for others to join</p>
-            </div>
+            <>
+              <div>
+                <p>Waiting for others to join</p>
+              </div>
+            </>
         }
       </div>
 

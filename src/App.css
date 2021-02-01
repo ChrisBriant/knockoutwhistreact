@@ -154,3 +154,10 @@ button:disabled:  button,
 .cardfront:hover {
   border-color: green;
 }
+
+.card-back {
+  width: 1rem;
+  height: 2rem;
+  text-align: center;
+  margin:2px;
+}

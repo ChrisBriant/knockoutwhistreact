@@ -25,7 +25,9 @@ const TestConnect = () => {
                           hand:[],
                           startPlayer:false,
                           trump: null,
-                          trick: []
+                          trick: [],
+                          completedTricks: [],
+                          roundNumber: 0
   };
 
 
@@ -118,12 +120,14 @@ const TestConnect = () => {
         };
       case 'hand':
         //Set the hand
-        console.log(action.payload);
+        console.log('HAND',action.payload,state.completedTricks);
         return {  ...state,
                   hand : action.payload.hand,
                   startPlayer: action.payload.startplayer,
                   trump: action.payload.trump,
-                  trick: action.payload.trick
+                  trick: action.payload.trick,
+                  completedTricks: action.payload.completed_tricks,
+                  roundNumber: action.payload.round_number
         };
       default:
         return state;
@@ -223,6 +227,8 @@ const TestConnect = () => {
                     startPlayer={state.startPlayer}
                     trump ={state.trump}
                     trick={state.trick}
+                    completedTricks={state.completedTricks}
+                    roundNumber={state.roundNumber}
                     /> :
               <Rooms userId={state.myId} rooms={state.rooms}/>
           }
