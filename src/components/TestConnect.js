@@ -27,7 +27,10 @@ const TestConnect = () => {
                           trump: null,
                           trick: [],
                           completedTricks: [],
-                          roundNumber: 0
+                          roundNumber: 0,
+                          gameInProgress: false,
+                          roundResult: {},
+                          tieBreaker: false
   };
 
 
@@ -44,6 +47,7 @@ const TestConnect = () => {
     let inRoom;
     let roomMessages;
     let roomName;
+    let tieBreaker;
 
     switch (action.type) {
       case 'setResponse':
@@ -127,7 +131,27 @@ const TestConnect = () => {
                   trump: action.payload.trump,
                   trick: action.payload.trick,
                   completedTricks: action.payload.completed_tricks,
-                  roundNumber: action.payload.round_number
+                  roundNumber: action.payload.round_number,
+                  gameInProgress: true
+        };
+      case 'roundResult':
+        //Set the hand
+        //// TODO: Implement Tie Breaker logic
+        if(action.payload.roundResult.ties.length > 1) {
+          tieBreaker = true;
+        } else {
+          tieBreaker = false;
+        }
+        return {  ...state,
+                  hand : action.payload.hand,
+                  startPlayer: action.payload.startplayer,
+                  trump: action.payload.trump,
+                  trick: action.payload.trick,
+                  completedTricks: action.payload.completed_tricks,
+                  roundNumber: action.payload.round_number,
+                  gameInProgress: true,
+                  roundResult: action.payload.roundResult,
+                  tieBreaker: tieBreaker
         };
       default:
         return state;
@@ -176,6 +200,9 @@ const TestConnect = () => {
               case 'hand':
                 dispatch({type:'hand', payload:data});
                 break;
+              case 'round_result':
+                dispatch({type:'roundResult', payload:data});
+                break;
               case 'destroy_room':
                 dispatch({type:'destroyRoom', payload:data});
                 break;
@@ -223,12 +250,15 @@ const TestConnect = () => {
                     roomName={state.roomName}
                     roomMessages={state.roomMessages}
                     otherMembers={state.otherMembers}
+                    gameInProgress={state.gameInProgress}
                     hand={state.hand}
                     startPlayer={state.startPlayer}
                     trump ={state.trump}
                     trick={state.trick}
                     completedTricks={state.completedTricks}
                     roundNumber={state.roundNumber}
+                    roundResult={state.roundResult}
+                    tieBreaker={state.tieBreaker}
                     /> :
               <Rooms userId={state.myId} rooms={state.rooms}/>
           }

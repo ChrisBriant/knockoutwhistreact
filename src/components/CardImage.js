@@ -174,7 +174,7 @@ const CardImage = (props) => {
 
   return (
     <div className="cardfront">
-      <img id={props.id} src={getCard()} alt={props.card}/>
+      <img className="cardfront-img" id={props.id} src={getCard()} alt={props.card}/>
     </div>
   );
 }

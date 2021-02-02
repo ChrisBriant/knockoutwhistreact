@@ -8,16 +8,18 @@ const Tricks = (props) => {
     <div>
       <p>Round {props.roundNumber}</p>
       <p>winnings</p>
-      {
-        props.completedTricks.map((trick, i) => (
-            trick.winner.player === props.userId
-            ?
-              <div key={i} className="card-back">
-                <img className="card-back" src={cardBack}></img>
-              </div>
-            : null
-        ))
-      }
+      <div className="flex-container">
+        {
+          props.completedTricks.map((trick, i) => (
+              trick.winner.player === props.userId
+              ?
+                <div key={i} className="card-back">
+                  <img className="card-back" src={cardBack}></img>
+                </div>
+              : null
+          ))
+        }
+      </div>
     </div>
   );
 }

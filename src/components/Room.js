@@ -96,7 +96,7 @@ const Room = (props) => {
             <>
 
               {
-                props.hand.length === 0
+                !props.gameInProgress
                 ?
                   <>
                     <PlayerBox
@@ -104,7 +104,7 @@ const Room = (props) => {
                       startPlayer={props.startPlayer}
                     />
                     <div>
-                      <button onClick={startGame}>Start Game</button>
+                      <button id="startgame-btn" onClick={startGame}>Start Game</button>
                     </div>
                   </>
                 :
@@ -126,7 +126,7 @@ const Room = (props) => {
                     />
                     {
                       props.userId === props.startPlayer ?
-                      <p>You go first, play a card!</p> :
+                      <p id="firstgo">You go first, play a card!</p> :
                       <p></p>
                     }
                     <Hand
