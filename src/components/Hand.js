@@ -17,6 +17,15 @@ const getCardPicture = (card) => {
 };
 
 const Hand = (props) => {
+  let pickTrump;
+
+  if(props.startRound && props.startPlayer === props.userId )
+  {
+    pickTrump = true;
+  } else {
+    pickTrump = false;
+  }
+
 
   const playCard = async (e) => {
     console.log('here is the id', e.target.id);
@@ -29,12 +38,26 @@ const Hand = (props) => {
     await sock.send(JSON.stringify(payload));
   }
 
+  const handlePickTrump = async (e) => {
+    let payload = {
+      'type' : 'pick_trump',
+      'card' : e.target.id,
+      'client_id' : props.userId,
+      'room_id' : props.roomId
+    }
+    await sock.send(JSON.stringify(payload));
+  }
+
   return (
     <>
+      { pickTrump
+        ? <p>Congratulations you won the round! Please pick a trup card.</p>
+        : null
+      }
       <div className="flex-container">
         {
           props.hand.map((card,i) => (
-            <div id={card} key={i} onClick={playCard}>
+            <div id={card} key={i} onClick={pickTrump ? handlePickTrump : playCard}>
               <CardImage
                 id={card}
                 card={card}

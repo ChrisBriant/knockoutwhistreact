@@ -51,6 +51,10 @@ import hJ from "../assets/cards/hJ.png";
 import hQ from "../assets/cards/hQ.png";
 import hK from "../assets/cards/hK.png";
 import hA from "../assets/cards/hA.png";
+import hearts from "../assets/cards/hearts.png";
+import diamonds from "../assets/cards/diamonds.png";
+import clubs from "../assets/cards/clubs.png";
+import spades from "../assets/cards/spades.png";
 
 const CardImage = (props) => {
   const getCard = () => {
@@ -159,6 +163,14 @@ const CardImage = (props) => {
         return hK;
       case 'hA':
         return hA;
+      case 'h':
+        return hearts;
+      case 'c':
+        return clubs;
+      case 'd':
+        return diamonds;
+      case 's':
+        return spades;
     }
   }
 

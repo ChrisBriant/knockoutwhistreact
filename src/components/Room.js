@@ -5,6 +5,7 @@ import Table from './Table';
 import Tricks from './Tricks';
 import sock from '../services/socket';
 import PlayerBox from './PlayerBox';
+import RoundResults from './RoundResults';
 
 
 
@@ -119,6 +120,9 @@ const Room = (props) => {
                         completedTricks={props.completedTricks}
                         roundNumber={props.roundNumber}
                       />
+                      <RoundResults
+                        roundResults = {props.roundResults}
+                      />
                     </div>
                     <Table
                       trump={props.trump}
@@ -133,6 +137,8 @@ const Room = (props) => {
                       hand = {props.hand}
                       userId = {props.userId}
                       roomId = {props.roomName}
+                      startRound={props.startRound}
+                      startPlayer={props.startPlayer}
                     />
                   </>
               }
