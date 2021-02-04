@@ -31,7 +31,8 @@ const TestConnect = () => {
                           gameInProgress: false,
                           roundResults: [],
                           tieBreaker: false,
-                          startRound:false
+                          startRound:false,
+                          winner: null
   };
 
 
@@ -161,6 +162,19 @@ const TestConnect = () => {
                     trump: action.payload.trump,
                     startRound: false
           };
+        case 'endGame':
+          //Set the hand
+          //// TODO: Implement Tie Breaker logic
+          if(action.payload.winner.ties.length > 1) {
+            tieBreaker = true;
+          } else {
+            tieBreaker = false;
+          }
+          return {  ...state,
+                    hand : action.payload.hand,
+                    winner: action.payload.winner,
+                    tieBreaker: tieBreaker
+          };
       default:
         return state;
     }
@@ -223,6 +237,9 @@ const TestConnect = () => {
               case 'trump_selected':
                 dispatch({type:'newTrump', payload:data});
                 break;
+              case 'end_game':
+                dispatch({type:'endGame', payload:data});
+                break;
               default:
                 dispatch({type:'setResponse', payload:data.message});
           }
@@ -271,6 +288,7 @@ const TestConnect = () => {
                     roundResults={state.roundResults}
                     tieBreaker={state.tieBreaker}
                     startRound={state.startRound}
+                    winner={state.winner}
                     /> :
               <Rooms userId={state.myId} rooms={state.rooms}/>
           }

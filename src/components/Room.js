@@ -6,6 +6,7 @@ import Tricks from './Tricks';
 import sock from '../services/socket';
 import PlayerBox from './PlayerBox';
 import RoundResults from './RoundResults';
+import GameOver from './GameOver';
 
 
 
@@ -95,7 +96,6 @@ const Room = (props) => {
         { props.otherMembers.length > 0
           ?
             <>
-
               {
                 !props.gameInProgress
                 ?
@@ -110,36 +110,45 @@ const Room = (props) => {
                   </>
                 :
                   <>
-                    <div className="flex-container">
-                      <PlayerBox
-                        otherMembers={props.otherMembers}
-                        startPlayer={props.startPlayer}
-                      />
-                      <Tricks
-                        userId = {props.userId}
-                        completedTricks={props.completedTricks}
-                        roundNumber={props.roundNumber}
-                      />
-                      <RoundResults
-                        roundResults = {props.roundResults}
-                      />
-                    </div>
-                    <Table
-                      trump={props.trump}
-                      trick={props.trick}
-                    />
-                    {
-                      props.userId === props.startPlayer ?
-                      <p id="firstgo">You go first, play a card!</p> :
-                      <p></p>
+                    { props.winner
+                      ?
+                        <>
+                          <GameOver />
+                        </>
+                      :
+                        <>
+                        <div className="flex-container">
+                          <PlayerBox
+                            otherMembers={props.otherMembers}
+                            startPlayer={props.startPlayer}
+                          />
+                          <Tricks
+                            userId = {props.userId}
+                            completedTricks={props.completedTricks}
+                            roundNumber={props.roundNumber}
+                          />
+                          <RoundResults
+                            roundResults = {props.roundResults}
+                          />
+                        </div>
+                        <Table
+                          trump={props.trump}
+                          trick={props.trick}
+                        />
+                        {
+                          props.userId === props.startPlayer ?
+                          <p id="firstgo">You go first, play a card!</p> :
+                          <p></p>
+                        }
+                        <Hand
+                          hand = {props.hand}
+                          userId = {props.userId}
+                          roomId = {props.roomName}
+                          startRound={props.startRound}
+                          startPlayer={props.startPlayer}
+                        />
+                      </>
                     }
-                    <Hand
-                      hand = {props.hand}
-                      userId = {props.userId}
-                      roomId = {props.roomName}
-                      startRound={props.startRound}
-                      startPlayer={props.startPlayer}
-                    />
                   </>
               }
             </>
