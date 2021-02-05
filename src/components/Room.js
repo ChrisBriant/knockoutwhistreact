@@ -113,7 +113,10 @@ const Room = (props) => {
                     { props.winner
                       ?
                         <>
-                          <GameOver />
+                          <GameOver
+                            userId = {props.userId}
+                            winner = {props.winner}
+                          />
                         </>
                       :
                         <>
