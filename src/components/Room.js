@@ -110,7 +110,7 @@ const Room = (props) => {
                   </>
                 :
                   <>
-                    { props.winner
+                    { props.winner && !props.tieBreaker
                       ?
                         <>
                           <GameOver
@@ -135,21 +135,30 @@ const Room = (props) => {
                           />
                         </div>
                         <Table
+                          userId={props.userId}
                           trump={props.trump}
                           trick={props.trick}
+                          tieBreaker={props.tieBreaker}
+                          tieBreakerDeck={props.tieBreakerDeck}
+                          tieStartPlayer={props.tieStartPlayer}
                         />
                         {
                           props.userId === props.startPlayer ?
                           <p id="firstgo">You go first, play a card!</p> :
                           <p></p>
                         }
-                        <Hand
-                          hand = {props.hand}
-                          userId = {props.userId}
-                          roomId = {props.roomName}
-                          startRound={props.startRound}
-                          startPlayer={props.startPlayer}
-                        />
+                        {
+                          !props.tieBreaker
+                          ?
+                            <Hand
+                              hand = {props.hand}
+                              userId = {props.userId}
+                              roomId = {props.roomName}
+                              startRound={props.startRound}
+                              startPlayer={props.startPlayer}
+                            />
+                          : null
+                        }
                       </>
                     }
                   </>

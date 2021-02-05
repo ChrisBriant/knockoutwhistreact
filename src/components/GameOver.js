@@ -12,15 +12,17 @@ const GameOver = (props) => {
           <p>The winner is {props.winner.winner_name}</p>
       }
       <table>
-      <tr><th>Player</th><th>Score</th></tr>
-        {
-          props.winner.scores.map((score) => (
-            <tr>
-              <td>{score.winner_name}</td>
-              <td>{score.score}</td>
-            </tr>
-          ))
-        }
+        <thead><tr><th>Player</th><th>Score</th></tr></thead>
+        <tbody>
+          {
+            props.winner.scores.map((score, i) => (
+              <tr key={i}>
+                <td>{score.winner_name}</td>
+                <td>{score.score}</td>
+              </tr>
+            ))
+          }
+        </tbody>
       </table>
 
     </div>

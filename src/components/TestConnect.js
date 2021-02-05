@@ -31,6 +31,8 @@ const TestConnect = () => {
                           gameInProgress: false,
                           roundResults: [],
                           tieBreaker: false,
+                          tieBreakerDeck: [],
+                          tieStartPlayer: '',
                           startRound:false,
                           winner: null
   };
@@ -50,6 +52,8 @@ const TestConnect = () => {
     let roomMessages;
     let roomName;
     let tieBreaker;
+    let tieBreakerDeck;
+    let tieStartPlayer;
 
     switch (action.type) {
       case 'setResponse':
@@ -167,13 +171,17 @@ const TestConnect = () => {
           //// TODO: Implement Tie Breaker logic
           if(action.payload.winner.ties.length > 1) {
             tieBreaker = true;
+            tieBreakerDeck = action.payload.winner.tieBreakerDeck;
+            tieStartPlayer = action.payload.winner.ties[0].player;
           } else {
             tieBreaker = false;
+            tieBreakerDeck = [];
           }
           return {  ...state,
                     hand : action.payload.hand,
                     winner: action.payload.winner,
-                    tieBreaker: tieBreaker
+                    tieBreaker: tieBreaker,
+                    tieBreakerDeck: tieBreakerDeck
           };
       default:
         return state;
@@ -287,6 +295,8 @@ const TestConnect = () => {
                     roundNumber={state.roundNumber}
                     roundResults={state.roundResults}
                     tieBreaker={state.tieBreaker}
+                    tieBreakerDeck={state.tieBreakerDeck}
+                    tieStartPlayer={state.tieStartPlayer}
                     startRound={state.startRound}
                     winner={state.winner}
                     /> :
