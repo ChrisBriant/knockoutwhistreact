@@ -57,6 +57,9 @@ import clubs from "../assets/cards/clubs.png";
 import spades from "../assets/cards/spades.png";
 
 const CardImage = (props) => {
+  let cardClass;
+  let cardImgClass;
+
   const getCard = () => {
     switch(props.card) {
       case 's2':
@@ -174,6 +177,14 @@ const CardImage = (props) => {
     }
   }
 
+  if(props.myTurn) {
+    cardClass = 'cardfront';
+    cardImgClass = 'cardfront-img';
+  } else {
+    cardClass = 'cardfront-static';
+    cardImgClass = 'cardfront-img-static';
+  }
+
   // const playCard = async (e) => {
   //   let payload = {
   //     'type' : 'play_card',
@@ -185,8 +196,8 @@ const CardImage = (props) => {
   // }
 
   return (
-    <div className="cardfront">
-      <img className="cardfront-img" id={props.id} src={getCard()} alt={props.card}/>
+    <div className={cardClass}>
+      <img className={cardImgClass} id={props.id} src={getCard()} alt={props.card}/>
     </div>
   );
 }

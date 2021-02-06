@@ -18,6 +18,7 @@ const getCardPicture = (card) => {
 
 const Hand = (props) => {
   let pickTrump;
+  let myTurn;
 
   if(props.startRound && props.startPlayer === props.userId )
   {
@@ -26,16 +27,24 @@ const Hand = (props) => {
     pickTrump = false;
   }
 
+  if(props.startPlayer === props.userId) {
+    myTurn = true;
+  } else {
+    myTurn = false;
+  }
+
 
   const playCard = async (e) => {
-    console.log('here is the id', e.target.id);
-    let payload = {
-      'type' : 'play_card',
-      'card' : e.target.id,
-      'client_id' : props.userId,
-      'room_id' : props.roomId
+    if(myTurn) {
+      console.log('here is the id', e.target.id);
+      let payload = {
+        'type' : 'play_card',
+        'card' : e.target.id,
+        'client_id' : props.userId,
+        'room_id' : props.roomId
+      }
+      await sock.send(JSON.stringify(payload));
     }
-    await sock.send(JSON.stringify(payload));
   }
 
   const handlePickTrump = async (e) => {
@@ -63,6 +72,7 @@ const Hand = (props) => {
                 card={card}
                 userId={props.userId}
                 roomId={props.roomId}
+                myTurn={myTurn}
               />
             </div>
           ))
