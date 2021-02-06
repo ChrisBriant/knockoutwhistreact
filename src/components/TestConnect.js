@@ -32,6 +32,8 @@ const TestConnect = () => {
                           roundResults: [],
                           tieBreaker: false,
                           tieBreakerDeck: [],
+                          tieBreakId : '',
+                          ties : [],
                           tieStartPlayer: '',
                           startRound:false,
                           winner: null
@@ -54,6 +56,7 @@ const TestConnect = () => {
     let tieBreaker;
     let tieBreakerDeck;
     let tieStartPlayer;
+    let ties;
 
     switch (action.type) {
       case 'setResponse':
@@ -171,8 +174,9 @@ const TestConnect = () => {
           //// TODO: Implement Tie Breaker logic
           if(action.payload.winner.ties.length > 1) {
             tieBreaker = true;
-            tieBreakerDeck = action.payload.winner.tieBreakerDeck;
-            tieStartPlayer = action.payload.winner.ties[0].player;
+            tieBreakerDeck = action.payload.winner.tie_breaker_deck;
+            tieStartPlayer = action.payload.winner.tie_starter;
+            ties = action.payload.winner.ties.map((t) => (t.player))
           } else {
             tieBreaker = false;
             tieBreakerDeck = [];
@@ -181,8 +185,17 @@ const TestConnect = () => {
                     hand : action.payload.hand,
                     winner: action.payload.winner,
                     tieBreaker: tieBreaker,
-                    tieBreakerDeck: tieBreakerDeck
+                    tieBreakerDeck: tieBreakerDeck,
+                    tieStartPlayer: tieStartPlayer,
+                    ties : ties
           };
+      case 'tieBreak':
+        return { ...state,
+                tieBreaker: true,
+                tieStartPlayer: action.payload.start_player,
+                ties: action.payload.ties
+
+        };
       default:
         return state;
     }
@@ -248,6 +261,9 @@ const TestConnect = () => {
               case 'end_game':
                 dispatch({type:'endGame', payload:data});
                 break;
+              case 'tie_break':
+                dispatch({type:'tieBreak', payload:data});
+                break;
               default:
                 dispatch({type:'setResponse', payload:data.message});
           }
@@ -297,6 +313,8 @@ const TestConnect = () => {
                     tieBreaker={state.tieBreaker}
                     tieBreakerDeck={state.tieBreakerDeck}
                     tieStartPlayer={state.tieStartPlayer}
+                    tieBreakId={state.tieBreakId}
+                    ties={state.ties}
                     startRound={state.startRound}
                     winner={state.winner}
                     /> :

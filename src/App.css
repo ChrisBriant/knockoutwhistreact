@@ -138,7 +138,8 @@ button:disabled:  button,
   padding: 10px;
 }
 
-.cardfront {
+.cardfront,
+.image-back-large-clickable {
   width: 3rem;
   height: 6rem;
   border: 5px solid rgba(0,0,0,0);
@@ -146,12 +147,14 @@ button:disabled:  button,
   margin:2px;
 }
 
-.cardfront > img {
+.cardfront > img,
+.image-back-large-clickable > img {
   width: 3rem;
   height: 6rem;
 }
 
-.cardfront:hover {
+.cardfront:hover,
+.image-back-large-clickable:hover {
   border-color: green;
 }
 
@@ -160,4 +163,20 @@ button:disabled:  button,
   height: 2rem;
   text-align: center;
   margin:2px;
+}
+
+/*Not clickable */
+.cardfront-static,
+.image-back-large {
+  width: 3rem;
+  height: 6rem;
+  border: 5px solid rgba(0,0,0,0);
+  text-align: center;
+  margin:2px;
+}
+
+.cardfront-static > img,
+.image-back-large > img {
+  width: 3rem;
+  height: 6rem;
 }

@@ -136,9 +136,12 @@ const Room = (props) => {
                         </div>
                         <Table
                           userId={props.userId}
+                          roomId={props.roomName}
                           trump={props.trump}
                           trick={props.trick}
                           tieBreaker={props.tieBreaker}
+                          ties={props.ties}
+                          tieBreakId={props.tieBreakId}
                           tieBreakerDeck={props.tieBreakerDeck}
                           tieStartPlayer={props.tieStartPlayer}
                         />
