@@ -33,6 +33,7 @@ const TestConnect = () => {
                           tieBreaker: false,
                           tieBreakerDeck: [],
                           tieBreakId : '',
+                          tieBreakWinner: null,
                           ties : [],
                           tieStartPlayer: '',
                           startRound:false,
@@ -193,8 +194,8 @@ const TestConnect = () => {
         return { ...state,
                 tieBreaker: true,
                 tieStartPlayer: action.payload.start_player,
-                ties: action.payload.ties
-
+                ties: action.payload.ties,
+                tieBreakWinner: action.payload.winner
         };
       default:
         return state;
@@ -313,6 +314,7 @@ const TestConnect = () => {
                     tieBreaker={state.tieBreaker}
                     tieBreakerDeck={state.tieBreakerDeck}
                     tieStartPlayer={state.tieStartPlayer}
+                    tieBreakWinner={state.tieBreakWinner}
                     tieBreakId={state.tieBreakId}
                     ties={state.ties}
                     startRound={state.startRound}

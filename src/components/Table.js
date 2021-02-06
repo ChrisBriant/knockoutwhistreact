@@ -19,6 +19,8 @@ const Table = (props) => {
   let tieFirstPlayer;
   let imageBackClass;
   let included;
+  let tieBreakWon;
+  let tieBreakWinner;
 
   const [chosenCard,setChosen] = useState(null);
 
@@ -35,6 +37,19 @@ const Table = (props) => {
   } else {
     included = false;
   }
+
+  if(props.tieBreakWinner) {
+    tieBreakWon = true;
+    if(props.tieBreakWinner.client_id === props.userId) {
+      tieBreakWinner = true;
+    } else {
+      tieBreakWinner = false;
+    }
+  } else {
+    tieBreakWon = false;
+  }
+
+
 
   const pickTieBreak = async (tieFirstPlayer) => {
     if(tieFirstPlayer) {
@@ -83,31 +98,50 @@ const Table = (props) => {
             </>
           :
             <>
-              <p>Tie Breaker</p>
-              {
-                tieFirstPlayer
-                ? <p>Pick a card, ace is high, low takes!</p>
-                : <p>Waiting for other players to pick card.</p>
-              }
-              {
-                included
-                ?
-                  <div>
-                    <img className={imageBackClass} src={cardBack} onClick={() => pickTieBreak(tieFirstPlayer)}></img>
-                  </div>
-                : null
-              }
-              {
-                chosenCard
-                ?
-                <>
-                  <p>You have picked</p>
-                  <CardImage
-                    id={chosenCard}
-                    card={chosenCard}
-                  />
-                </>
-                : null
+              { 
+                tieBreakWon
+                ? <>
+                  {
+                    tieBreakWinner
+                    ?
+                      <>
+                        <p>Congratulations you have won the tie break, please
+                          press continue.
+                        </p>
+                        <button>Continue</button>
+                      </>
+                    :
+                      <p>Sorry the other player has won the tie breaker, waiting for them to press continue.</p>
+                  }
+                  </>
+                : <>
+                    <p>Tie Breaker</p>
+                    {
+                      tieFirstPlayer
+                      ? <p>Pick a card, ace is high, low takes!</p>
+                      : <p>Waiting for other players to pick card.</p>
+                    }
+                    {
+                      included
+                      ?
+                        <div>
+                          <img className={imageBackClass} src={cardBack} onClick={() => pickTieBreak(tieFirstPlayer)}></img>
+                        </div>
+                      : null
+                    }
+                    {
+                      chosenCard
+                      ?
+                      <>
+                        <p>You have picked</p>
+                        <CardImage
+                          id={chosenCard}
+                          card={chosenCard}
+                        />
+                      </>
+                      : null
+                    }
+                  </>
               }
             </>
       }

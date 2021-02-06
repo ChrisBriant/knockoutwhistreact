@@ -143,6 +143,7 @@ const Room = (props) => {
                           ties={props.ties}
                           tieBreakId={props.tieBreakId}
                           tieBreakerDeck={props.tieBreakerDeck}
+                          tieBreakWinner={props.tieBreakWinner}
                           tieStartPlayer={props.tieStartPlayer}
                         />
                         {
