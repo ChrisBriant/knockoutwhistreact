@@ -66,9 +66,19 @@ const Table = (props) => {
         'ties' : props.ties,
         'tie_break_id' : props.tieBreakId
       }
-      console.log(payload);
       await sock.send(JSON.stringify(payload));
     }
+  }
+
+  const endTieBreak = async () => {
+    let payload = {
+      'type' : 'end_tie_break',
+      'client_id' : props.tieBreakWinner.client_id,
+      'room_id' : props.roomId,
+      'tie_break_id' : props.tieBreakId
+    }
+    console.log('HERE IS THE PAYLOAD',payload);
+    await sock.send(JSON.stringify(payload));
   }
 
   return (
@@ -98,7 +108,7 @@ const Table = (props) => {
             </>
           :
             <>
-              { 
+              {
                 tieBreakWon
                 ? <>
                   {
@@ -108,7 +118,7 @@ const Table = (props) => {
                         <p>Congratulations you have won the tie break, please
                           press continue.
                         </p>
-                        <button>Continue</button>
+                        <button onClick={endTieBreak}>Continue</button>
                       </>
                     :
                       <p>Sorry the other player has won the tie breaker, waiting for them to press continue.</p>
@@ -129,19 +139,21 @@ const Table = (props) => {
                         </div>
                       : null
                     }
-                    {
-                      chosenCard
-                      ?
-                      <>
-                        <p>You have picked</p>
-                        <CardImage
-                          id={chosenCard}
-                          card={chosenCard}
-                        />
-                      </>
-                      : null
-                    }
+
+
                   </>
+              }
+              {
+                chosenCard
+                ?
+                <>
+                  <p>You have picked</p>
+                  <CardImage
+                    id={chosenCard}
+                    card={chosenCard}
+                  />
+                </>
+                : null
               }
             </>
       }

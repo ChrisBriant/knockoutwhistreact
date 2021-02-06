@@ -58,6 +58,7 @@ const TestConnect = () => {
     let tieBreakerDeck;
     let tieStartPlayer;
     let ties;
+    let newRoundResults;
 
     switch (action.type) {
       case 'setResponse':
@@ -195,7 +196,26 @@ const TestConnect = () => {
                 tieBreaker: true,
                 tieStartPlayer: action.payload.start_player,
                 ties: action.payload.ties,
-                tieBreakWinner: action.payload.winner
+                tieBreakWinner: action.payload.winner,
+                tieBreakId : action.payload.tie_break_id
+        };
+      case 'endTieBreak':
+        //Result might have changed so need to capture that and also reset
+        // all state variables related to tie breaking
+        console.log('Round Results Here', state.roundResults);
+        newRoundResults = state.roundResults.filter((roundResult) => (roundResult.round_number !== action.payload.round_result.round_number));
+        return { ...state,
+                //Set payload data
+                winner: action.payload.winner,
+                start_player: action.payload.start_player,
+                roundResults: newRoundResults,
+                //Reset tie breaker variables
+                tieBreaker: false,
+                tieBreakerDeck: [],
+                tieBreakId : '',
+                tieBreakWinner: null,
+                ties : [],
+                tieStartPlayer: ''
         };
       default:
         return state;
@@ -264,6 +284,9 @@ const TestConnect = () => {
                 break;
               case 'tie_break':
                 dispatch({type:'tieBreak', payload:data});
+                break;
+              case 'end_tie_break':
+                dispatch({type:'endTieBreak', payload:data});
                 break;
               default:
                 dispatch({type:'setResponse', payload:data.message});
