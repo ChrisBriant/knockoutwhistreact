@@ -315,7 +315,7 @@ const TestConnect = () => {
   console.log('Something is rotten in the state of react', state);
 
   return (
-    <div>
+    <div className="gameMain">
       { state.myName ?
         <>
           <p>Welcome {state.myName}</p>

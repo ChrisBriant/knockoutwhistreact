@@ -1,5 +1,4 @@
 import {useState} from 'react';
-//import { animateScroll } from "react-scroll";
 import Hand from './Hand';
 import Table from './Table';
 import Tricks from './Tricks';
@@ -91,8 +90,7 @@ const Room = (props) => {
 
   return (
     <>
-      <p>You are in {props.roomName}</p>
-      <div>
+      <div className="gameMain">
         { props.otherMembers.length > 0
           ?
             <>
@@ -100,6 +98,7 @@ const Room = (props) => {
                 !props.gameInProgress
                 ?
                   <>
+                    <p>You are in {props.roomName}</p>
                     <PlayerBox
                       otherMembers={props.otherMembers}
                       startPlayer={props.startPlayer}
@@ -121,48 +120,53 @@ const Room = (props) => {
                       :
                         <>
                         <div className="flex-container">
-                          <PlayerBox
-                            otherMembers={props.otherMembers}
-                            startPlayer={props.startPlayer}
-                          />
-                          <Tricks
-                            userId = {props.userId}
-                            completedTricks={props.completedTricks}
-                            roundNumber={props.roundNumber}
-                          />
-                          <RoundResults
-                            roundResults = {props.roundResults}
-                          />
-                        </div>
-                        <Table
-                          userId={props.userId}
-                          roomId={props.roomName}
-                          trump={props.trump}
-                          trick={props.trick}
-                          tieBreaker={props.tieBreaker}
-                          ties={props.ties}
-                          tieBreakId={props.tieBreakId}
-                          tieBreakerDeck={props.tieBreakerDeck}
-                          tieBreakWinner={props.tieBreakWinner}
-                          tieStartPlayer={props.tieStartPlayer}
-                        />
-                        {
-                          props.userId === props.startPlayer ?
-                          <p id="firstgo">You go first, play a card!</p> :
-                          <p></p>
-                        }
-                        {
-                          !props.tieBreaker
-                          ?
-                            <Hand
-                              hand = {props.hand}
-                              userId = {props.userId}
-                              roomId = {props.roomName}
-                              startRound={props.startRound}
+                          <div className="statsPanel">
+                            <PlayerBox
+                              otherMembers={props.otherMembers}
                               startPlayer={props.startPlayer}
                             />
-                          : null
-                        }
+                            <Tricks
+                              userId = {props.userId}
+                              completedTricks={props.completedTricks}
+                              roundNumber={props.roundNumber}
+                            />
+                            <RoundResults
+                              roundResults = {props.roundResults}
+                            />
+                          </div>
+                          <div className="playArea">
+                            <Table
+                              userId={props.userId}
+                              roomId={props.roomName}
+                              trump={props.trump}
+                              trick={props.trick}
+                              tieBreaker={props.tieBreaker}
+                              ties={props.ties}
+                              tieBreakId={props.tieBreakId}
+                              tieBreakerDeck={props.tieBreakerDeck}
+                              tieBreakWinner={props.tieBreakWinner}
+                              tieStartPlayer={props.tieStartPlayer}
+                            />
+                            {
+                              props.userId === props.startPlayer ?
+                              <p id="firstgo">Your turn, pick a card!</p> :
+                              <p></p>
+                            }
+                            {
+                              !props.tieBreaker
+                              ?
+                                <Hand
+                                  hand = {props.hand}
+                                  userId = {props.userId}
+                                  roomId = {props.roomName}
+                                  startRound={props.startRound}
+                                  startPlayer={props.startPlayer}
+                                  trick={props.trick}
+                                />
+                              : null
+                            }
+                          </div>
+                        </div>
                       </>
                     }
                   </>
