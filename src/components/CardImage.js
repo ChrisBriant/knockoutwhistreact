@@ -197,7 +197,7 @@ const CardImage = (props) => {
 
   return (
     <div className={cardClass}>
-      <img className={cardImgClass} id={props.id} src={getCard()} alt={props.card}/>
+      <img className={cardImgClass} id={props.card} src={getCard()} alt={props.card}/>
     </div>
   );
 }

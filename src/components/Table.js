@@ -92,12 +92,12 @@ const Table = (props) => {
                   <p>Trump</p>
                   <CardImage card={props.trump} />
                 </div>
-                <div>
+                <div id="played-cards">
                   <p>Played Cards</p>
                   <div className="flex-container">
                     {
                       props.trick.map( (card,i) => (
-                        <div key={i}>
+                        <div id="latestintrick" class={props.trick[0].card} key={i}>
                           <CardImage card={card.card} />
                         </div>
                       ))
