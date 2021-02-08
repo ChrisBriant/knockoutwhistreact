@@ -136,7 +136,7 @@ button:disabled:  button,
 }
 
 .flex-container > div {
-  padding: 10px;
+  /*padding: 10px;*/
 }
 
 .cardfront,
@@ -164,7 +164,10 @@ button:disabled:  button,
   height: 2rem;
   text-align: center;
   margin:2px;
+  padding: 1px;
 }
+
+
 
 /*Not clickable */
 .cardfront-static,
@@ -183,13 +186,22 @@ button:disabled:  button,
 }
 
 .playArea {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+  border-radius: 5px;
+  margin: 5px;
   width: 70%;
 }
 
 .statsPanel {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+  border-radius: 5px;
+  margin: 5px;
+  padding: 5px;
   width: 30%;
+  text-align: left;
 }
 
 .gameMain {
   width: 90%;
+  margin: auto;
 }
