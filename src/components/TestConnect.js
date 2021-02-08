@@ -151,8 +151,12 @@ const TestConnect = () => {
         //// TODO: Implement Tie Breaker logic
         if(action.payload.round_result.ties.length > 1) {
           tieBreaker = true;
+          tieBreakerDeck = action.payload.round_result.tie_breaker_deck;
+          tieStartPlayer = action.payload.round_result.tie_starter;
+          ties = action.payload.round_result.ties.map((t) => (t.player))
         } else {
           tieBreaker = false;
+          tieBreakerDeck = [];
         }
         return {  ...state,
                   hand : action.payload.hand,
@@ -164,7 +168,10 @@ const TestConnect = () => {
                   gameInProgress: true,
                   startRound:true,
                   roundResults: [...state.roundResults,action.payload.round_result],
-                  tieBreaker: tieBreaker
+                  tieBreaker: tieBreaker,
+                  tieBreakerDeck: tieBreakerDeck,
+                  tieStartPlayer: tieStartPlayer,
+                  ties : ties
         };
         case 'newTrump':
           return {  ...state,
