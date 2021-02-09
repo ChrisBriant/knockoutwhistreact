@@ -96,7 +96,7 @@ const Hand = (props) => {
   return (
     <>
       { pickTrump
-        ? <p>Congratulations you won the round! Please pick a trup card.</p>
+        ? <p>Congratulations you won the round! Please pick a trump card.</p>
         : null
       }
       <div className="flex-container">

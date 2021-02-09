@@ -37,7 +37,9 @@ const TestConnect = () => {
                           ties : [],
                           tieStartPlayer: '',
                           startRound:false,
-                          winner: null
+                          winner: null,
+                          knockout:false,
+                          winAsKnockout:false
   };
 
 
@@ -157,6 +159,7 @@ const TestConnect = () => {
         } else {
           tieBreaker = false;
           tieBreakerDeck = [];
+          ties = [];
         }
         return {  ...state,
                   hand : action.payload.hand,
@@ -189,6 +192,7 @@ const TestConnect = () => {
           } else {
             tieBreaker = false;
             tieBreakerDeck = [];
+            ties = [];
           }
           return {  ...state,
                     hand : action.payload.hand,
@@ -223,6 +227,15 @@ const TestConnect = () => {
                 tieBreakWinner: null,
                 ties : [],
                 tieStartPlayer: ''
+        };
+      case 'knockout':
+        return { ...state,
+                  knockout: true
+        };
+      case 'winAsKnockout':
+        console.log('SETTING WIN AS KNOCKOUT');
+        return { ...state,
+                  winAsKnockout: true
         };
       default:
         return state;
@@ -295,6 +308,12 @@ const TestConnect = () => {
               case 'end_tie_break':
                 dispatch({type:'endTieBreak', payload:data});
                 break;
+              case 'win_as_knockout':
+                dispatch({type:'winAsKnockout', payload:data});
+                break;
+              case 'knockout':
+                dispatch({type:'knockout', payload:data});
+                break;
               default:
                 dispatch({type:'setResponse', payload:data.message});
           }
@@ -349,6 +368,8 @@ const TestConnect = () => {
                     ties={state.ties}
                     startRound={state.startRound}
                     winner={state.winner}
+                    knockout={state.knockout}
+                    winAsKnockout={state.winAsKnockout}
                     /> :
               <Rooms userId={state.myId} rooms={state.rooms}/>
           }

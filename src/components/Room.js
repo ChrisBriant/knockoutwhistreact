@@ -109,12 +109,13 @@ const Room = (props) => {
                   </>
                 :
                   <>
-                    { props.winner && !props.tieBreaker
+                    { (props.winner && !props.tieBreaker) || props.winAsKnockout || props.knockout
                       ?
                         <>
                           <GameOver
                             userId = {props.userId}
                             winner = {props.winner}
+                            knockout = {props.knockout}
                           />
                         </>
                       :
