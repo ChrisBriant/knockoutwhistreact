@@ -113,6 +113,13 @@ const TestConnect = () => {
                   roomMessages,
                   otherMembers
         };
+      case 'exitRoomKnockout':
+        return {  ...state,
+                  inRoom : false,
+                  roomName : '',
+                  roomMessages : [],
+                  otherMembers : []
+        };
       case 'roomMessage':
         scrollDown();
         msg = `${action.payload.client.name}: ${action.payload.message} `;
@@ -218,7 +225,7 @@ const TestConnect = () => {
         return { ...state,
                 //Set payload data
                 winner: action.payload.winner,
-                start_player: action.payload.start_player,
+                start_player: action.payload.startPlayer,
                 roundResults: newRoundResults,
                 //Reset tie breaker variables
                 tieBreaker: false,
@@ -280,6 +287,9 @@ const TestConnect = () => {
                 break;
               case 'room_exit':
                 dispatch({type:'exitRoom', payload:data});
+                break;
+              case 'room_exit_nonmember':
+                dispatch({type:'exitRoomKnockout', payload:data});
                 break;
               case 'hand':
                 dispatch({type:'hand', payload:data});
