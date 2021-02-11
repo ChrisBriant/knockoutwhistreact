@@ -5,6 +5,7 @@ import SendName from './SendName';
 import Rooms from './Rooms';
 import Room from './Room';
 import Users from './Users';
+import ConnectionLost from './ConnectionLost';
 
 const TestConnect = () => {
   // const wsproto = 'wss';
@@ -39,7 +40,9 @@ const TestConnect = () => {
                           startRound:false,
                           winner: null,
                           knockout:false,
-                          winAsKnockout:false
+                          winAsKnockout:false,
+                          playerLostConnection:false,
+                          lostPlayer:''
   };
 
 
@@ -120,6 +123,17 @@ const TestConnect = () => {
                   roomMessages : [],
                   otherMembers : []
         };
+      case 'exitGameAndRoom':
+        if(action.payload.client.id === state.myId) {
+          state = initialState
+          return {state}
+        } else {
+          return {  ...state,
+                    playerLostConnection:true,
+                    lostPlayer : action.payload.client.name
+          };
+        }
+        break;
       case 'roomMessage':
         scrollDown();
         msg = `${action.payload.client.name}: ${action.payload.message} `;
@@ -288,6 +302,9 @@ const TestConnect = () => {
               case 'room_exit':
                 dispatch({type:'exitRoom', payload:data});
                 break;
+              case 'game_exit':
+                dispatch({type:'exitGameAndRoom', payload:data});
+                break;
               case 'room_exit_nonmember':
                 dispatch({type:'exitRoomKnockout', payload:data});
                 break;
@@ -352,42 +369,50 @@ const TestConnect = () => {
 
   return (
     <div className="gameMain">
-      { state.myName ?
-        <>
-          <p>Welcome {state.myName}</p>
-          {
-            state.inRoom ?
-              <Room userId={state.myId}
-                    name={state.myName}
-                    roomName={state.roomName}
-                    roomMessages={state.roomMessages}
-                    otherMembers={state.otherMembers}
-                    gameInProgress={state.gameInProgress}
-                    hand={state.hand}
-                    startPlayer={state.startPlayer}
-                    trump ={state.trump}
-                    trick={state.trick}
-                    completedTricks={state.completedTricks}
-                    roundNumber={state.roundNumber}
-                    roundResults={state.roundResults}
-                    tieBreaker={state.tieBreaker}
-                    tieBreakerDeck={state.tieBreakerDeck}
-                    tieStartPlayer={state.tieStartPlayer}
-                    tieBreakWinner={state.tieBreakWinner}
-                    tieBreakId={state.tieBreakId}
-                    ties={state.ties}
-                    startRound={state.startRound}
-                    winner={state.winner}
-                    knockout={state.knockout}
-                    winAsKnockout={state.winAsKnockout}
-                    /> :
-              <Rooms userId={state.myId} rooms={state.rooms}/>
-          }
-        </> :
-        <>
-          <p>Welcome</p>
-          <SendName userId={state.myId} />
-        </>
+      {
+        state.playerLostConnection
+        ?
+          <ConnectionLost player={state.lostPlayer} />
+        :
+          <>
+            { state.myName ?
+              <>
+                <p>Welcome {state.myName}</p>
+                {
+                  state.inRoom ?
+                    <Room userId={state.myId}
+                          name={state.myName}
+                          roomName={state.roomName}
+                          roomMessages={state.roomMessages}
+                          otherMembers={state.otherMembers}
+                          gameInProgress={state.gameInProgress}
+                          hand={state.hand}
+                          startPlayer={state.startPlayer}
+                          trump ={state.trump}
+                          trick={state.trick}
+                          completedTricks={state.completedTricks}
+                          roundNumber={state.roundNumber}
+                          roundResults={state.roundResults}
+                          tieBreaker={state.tieBreaker}
+                          tieBreakerDeck={state.tieBreakerDeck}
+                          tieStartPlayer={state.tieStartPlayer}
+                          tieBreakWinner={state.tieBreakWinner}
+                          tieBreakId={state.tieBreakId}
+                          ties={state.ties}
+                          startRound={state.startRound}
+                          winner={state.winner}
+                          knockout={state.knockout}
+                          winAsKnockout={state.winAsKnockout}
+                          /> :
+                    <Rooms userId={state.myId} rooms={state.rooms}/>
+                }
+              </> :
+              <>
+                <p>Welcome</p>
+                <SendName userId={state.myId} />
+              </>
+            }
+          </>
       }
 
     </div>
