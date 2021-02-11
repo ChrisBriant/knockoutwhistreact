@@ -45,6 +45,33 @@ const TestConnect = () => {
                           lostPlayer:''
   };
 
+  const resetState = {
+    inRoom: false,
+    roomName: '',
+    roomMessages: [],
+    otherMembers: [],
+    hand:[],
+    startPlayer:false,
+    trump: null,
+    trick: [],
+    completedTricks: [],
+    roundNumber: 0,
+    gameInProgress: false,
+    roundResults: [],
+    tieBreaker: false,
+    tieBreakerDeck: [],
+    tieBreakId : '',
+    tieBreakWinner: null,
+    ties : [],
+    tieStartPlayer: '',
+    startRound:false,
+    winner: null,
+    knockout:false,
+    winAsKnockout:false,
+    playerLostConnection:false,
+    lostPlayer:''
+  }
+
 
   const scrollDown = () => {
     console.log('Using room effect');
@@ -125,8 +152,9 @@ const TestConnect = () => {
         };
       case 'exitGameAndRoom':
         if(action.payload.client.id === state.myId) {
-          state = initialState
-          return {state}
+          return {  ...state,
+                    ...resetState
+          }
         } else {
           return {  ...state,
                     playerLostConnection:true,
@@ -258,6 +286,10 @@ const TestConnect = () => {
         return { ...state,
                   winAsKnockout: true
         };
+      case 'resetState':
+        return {...state,
+                ...resetState
+        };
       default:
         return state;
     }
@@ -365,6 +397,10 @@ const TestConnect = () => {
     }
   }
 
+  const resetStateOnExit = () => {
+    dispatch({type:'resetState', payload:null});
+  }
+
   console.log('Something is rotten in the state of react', state);
 
   return (
@@ -372,7 +408,7 @@ const TestConnect = () => {
       {
         state.playerLostConnection
         ?
-          <ConnectionLost player={state.lostPlayer} />
+          <ConnectionLost player={state.lostPlayer} disconnect={resetStateOnExit} />
         :
           <>
             { state.myName ?

@@ -5,6 +5,7 @@ const ConnectionLost = (props) => {
     <div>
       <p>Game Over</p>
       <p>{props.player} has disconnected, ending the game.</p>
+      <button onClick={props.disconnect}>Exit</button>
     </div>
   );
 }
