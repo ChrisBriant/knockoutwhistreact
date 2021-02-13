@@ -127,38 +127,39 @@ const TestConnect = () => {
         console.log('I AM LEAVING THE ROOM',action.payload.client.id,state.myId);
         if(action.payload.client.id === state.myId) {
           inRoom = false;
-          roomName = '';
-          otherMembers = [];
-          roomMessages = [];
+          return {  ...state,
+                    ...resetState,
+                    rooms: JSON.parse(action.payload.rooms)
+          };
         } else {
           inRoom = true;
           roomName = action.payload.name;
           otherMembers = action.payload.members.filter((item) => (item.id !== state.myId))
             .filter((item) => (item.name !== action.payload.client.name));
           console.log('Other members here', otherMembers);
+          return {  ...state,
+                    inRoom,
+                    roomName,
+                    roomMessages,
+                    otherMembers
+          };
         }
-        return {  ...state,
-                  inRoom,
-                  roomName,
-                  roomMessages,
-                  otherMembers
-        };
+        break;
       case 'exitRoomKnockout':
         return {  ...state,
-                  inRoom : false,
-                  roomName : '',
-                  roomMessages : [],
-                  otherMembers : []
+                  ...resetState
         };
       case 'exitGameAndRoom':
         if(action.payload.client.id === state.myId) {
           return {  ...state,
-                    ...resetState
+                    ...resetState,
+                    rooms: JSON.parse(action.payload.rooms)
           }
         } else {
           return {  ...state,
                     playerLostConnection:true,
-                    lostPlayer : action.payload.client.name
+                    lostPlayer : action.payload.client.name,
+                    rooms: JSON.parse(action.payload.rooms)
           };
         }
         break;
@@ -182,7 +183,8 @@ const TestConnect = () => {
                   roomName :'',
                   roomMessages:[],
                   otherMembers:[],
-                  hand:[]
+                  hand:[],
+                  rooms: action.payload.rooms
         };
       case 'hand':
         //Set the hand
@@ -347,7 +349,7 @@ const TestConnect = () => {
                 dispatch({type:'roundResult', payload:data});
                 break;
               case 'destroy_room':
-                dispatch({type:'destroyRoom', payload:data});
+                dispatch({type:'destroyRoom', payload:JSON.parse(data.rooms)});
                 break;
               case 'room_message':
                 dispatch({type:'roomMessage', payload:data});

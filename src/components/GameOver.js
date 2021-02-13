@@ -10,7 +10,7 @@ const GameOver = (props) => {
             { /*WIN AS KNOCKOUT CONDITION*/ }
             { !props.knockout
               ? <p>Congratulations you have won! The other players have been knocked out.</p>
-              : <p>Sorry you have been knocked out! Your didn't manage to win any tricks. Better luck next time!</p>
+              : <p>Sorry you have been knocked out! You didn't manage to win any tricks. Better luck next time!</p>
             }
 
           </>
